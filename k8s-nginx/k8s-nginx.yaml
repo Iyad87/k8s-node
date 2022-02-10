@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8s-nginx
+  template:
+    metadata:
+      labels:
+        app: k8s-nginx
+    spec:
+      containers:
+      - name: k8s-nginx
+        image: iyad87/k8s-nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-nginx
+spec:
+  type: LoadBalancer
+  selector:
+    app: k8s-nginx
+  ports:
+  - port: 3030
+    targetPort: 3000

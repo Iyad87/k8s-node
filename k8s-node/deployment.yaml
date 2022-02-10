@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-node
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: k8s-node
+  template:
+    metadata:
+      labels:
+        app: k8s-node
+    spec:
+      containers:
+      - name: k8s-node
+        image: iyad87/k8s-node
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
